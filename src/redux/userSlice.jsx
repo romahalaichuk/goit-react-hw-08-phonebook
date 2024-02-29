@@ -7,12 +7,7 @@ export const loginUser = createAsyncThunk(
     try {
       const response = await axios.post(
         'https://connections-api.herokuapp.com/users/login',
-        { email, password },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
+        { email, password }
       );
       return response.data;
     } catch (error) {
@@ -27,12 +22,22 @@ export const registerUser = createAsyncThunk(
     try {
       const response = await axios.post(
         'https://connections-api.herokuapp.com/users/signup',
-        { name, email, password },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
+        { name, email, password }
+      );
+      return response.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
+);
+
+export const updateUser = createAsyncThunk(
+  'user/updateUser',
+  async ({ name, email, password }) => {
+    try {
+      const response = await axios.patch(
+        'https://connections-api.herokuapp.com/users/current',
+        { name, email, password }
       );
       return response.data;
     } catch (error) {
@@ -44,13 +49,7 @@ export const registerUser = createAsyncThunk(
 export const logoutUser = createAsyncThunk('user/logoutUser', async () => {
   try {
     const response = await axios.post(
-      'https://connections-api.herokuapp.com/users/logout',
-      null,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
+      'https://connections-api.herokuapp.com/users/logout'
     );
     return response.data;
   } catch (error) {
@@ -63,12 +62,7 @@ export const fetchCurrentUser = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get(
-        'https://connections-api.herokuapp.com/users/current',
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
+        'https://connections-api.herokuapp.com/users/current'
       );
       return response.data;
     } catch (error) {
@@ -80,7 +74,7 @@ export const fetchCurrentUser = createAsyncThunk(
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    email: null,
+    user: null,
     status: 'idle',
     error: null,
   },
@@ -89,19 +83,23 @@ const userSlice = createSlice({
     builder
       .addCase(loginUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.email = action.payload.email;
+        state.user = action.payload.user;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.email = action.payload.email;
+        state.user = action.payload.user;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.user = action.payload.user;
       })
       .addCase(logoutUser.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.email = null;
+        state.user = null;
       })
       .addCase(fetchCurrentUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.email = action.payload.email;
+        state.user = action.payload.user;
       });
   },
 });
