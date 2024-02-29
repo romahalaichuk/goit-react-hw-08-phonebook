@@ -1,19 +1,26 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import store from '../redux/store';
-import ContactForm from './ContactForm/ContactForm';
-import ContactList from './ContactList/ContactList';
-import styles from './App.module.css';
+
+import LoginPage from '../components/pages/LoginPage/LoginPage';
+import RegisterPage from '../components/pages/RegisterPage/RegisterPage';
+import ContactsPage from '../components/pages/ContactsPage/ContactsPage';
+import Navigation from '../components/Navigation/Navigation';
 
 const App = () => {
   return (
     <Provider store={store}>
-      <div className={styles.phonebookContainer}>
-        <h1 className={styles.title}>Phonebook</h1>
-        <ContactForm />
-        <h2 className={styles.title}>Contacts</h2>
-        <ContactList />
-      </div>
+      <Router>
+        <div>
+          <Navigation />
+          <Routes>
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/contacts" element={<ContactsPage />} />
+          </Routes>
+        </div>
+      </Router>
     </Provider>
   );
 };
