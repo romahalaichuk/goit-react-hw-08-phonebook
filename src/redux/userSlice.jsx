@@ -23,11 +23,11 @@ export const loginUser = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   'user/registerUser',
-  async ({ email, password }) => {
+  async ({ name, email, password }) => {
     try {
       const response = await axios.post(
         'https://connections-api.herokuapp.com/users/signup',
-        { email, password },
+        { name, email, password },
         {
           headers: {
             'Content-Type': 'application/json',
