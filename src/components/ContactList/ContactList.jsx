@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Contact from '../Contact/Contact';
 import Filter from '../Filter/Filter';
-import { Scrollbars } from 'react-custom-scrollbars';
+
 import styles from './ContactList.module.css';
 import {
   fetchContacts,
@@ -36,25 +36,15 @@ const ContactList = () => {
     <div>
       <Filter />
 
-      <Scrollbars
-        autoHide
-        style={{ width: '100%', height: '700px' }}
-        renderTrackVertical={props => (
-          <div {...props} className={styles.scrollbarVertical}>
-            <div className={styles.scrollbarHandle} />
-          </div>
-        )}
-      >
-        <ul className={styles.listContainer}>
-          {contacts.map(contact => (
-            <Contact
-              key={contact.id}
-              contact={contact}
-              deleteContact={() => handleDeleteContact(contact.id)}
-            />
-          ))}
-        </ul>
-      </Scrollbars>
+      <ul className={styles.listContainer}>
+        {contacts.map(contact => (
+          <Contact
+            key={contact.id}
+            contact={contact}
+            deleteContact={() => handleDeleteContact(contact.id)}
+          />
+        ))}
+      </ul>
     </div>
   );
 };
