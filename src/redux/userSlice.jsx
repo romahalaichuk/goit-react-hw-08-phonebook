@@ -75,19 +75,27 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {
     user: null,
+    isLoggedIn: false,
     status: 'idle',
     error: null,
   },
-  reducers: {},
+  reducers: {
+    setUserLoggedIn(state, action) {
+      state.isLoggedIn = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.user = action.payload.user;
-      })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.user = action.payload.user;
+        state.isLoggedIn = true;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.user = action.payload.user;
+        console.log('Użytkownik zalogowany:', action.payload.user);
+        console.log('Czy użytkownik jest zalogowany:', state.isLoggedIn);
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
@@ -104,4 +112,8 @@ const userSlice = createSlice({
   },
 });
 
-export default userSlice.reducer;
+export const { setUserLoggedIn } = userSlice.actions;
+
+const userReducer = userSlice.reducer;
+
+export default userReducer;

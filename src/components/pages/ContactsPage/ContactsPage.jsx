@@ -1,4 +1,3 @@
-// ContactsPage.jsx
 import React from 'react';
 import { useSelector } from 'react-redux';
 import ContactForm from '../../ContactForm/ContactForm';
@@ -10,7 +9,7 @@ const ContactsPage = () => {
   const isLoggedIn = useSelector(state => state.user.isLoggedIn);
 
   if (!isLoggedIn) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/contacts" replace={true} />;
   }
 
   return (

@@ -1,25 +1,34 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../../redux/userSlice';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleSubmit = async e => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await dispatch(loginUser({ email, password }));
       setEmail('');
       setPassword('');
-      navigate('/contacts');
+      setIsLogged(true);
     } catch (error) {
-      console.error('Error during login:', error);
+      setLoginError('Invalid email or password');
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  if (isLogged) {
+    return <Navigate to="/contacts" replace={true} />;
+  }
 
   return (
     <div>
@@ -41,7 +50,10 @@ const LoginPage = () => {
           onChange={e => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Login</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Logging in...' : 'Login'}
+        </button>
+        {loginError && <p style={{ color: 'red' }}>{loginError}</p>}
       </form>
     </div>
   );

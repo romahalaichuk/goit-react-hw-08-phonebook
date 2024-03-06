@@ -2,9 +2,16 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchContacts = createAsyncThunk(
   'phonebook/fetchContacts',
-  async () => {
+  async (_, { getState }) => {
+    const { auth } = getState();
+    const token = auth.token;
     const response = await fetch(
-      'https://connections-api.herokuapp.com/contacts'
+      'https://connections-api.herokuapp.com/contacts',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     const data = await response.json();
     return data;

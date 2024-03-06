@@ -37,7 +37,7 @@ const ContactList = () => {
       <ul className={styles.listContainer}>
         {contacts.map(contact => (
           <Contact
-            key={contact.id}
+            key={contact.id} // Dodaj klucz dla każdego elementu listy
             contact={contact}
             deleteContact={() => handleDeleteContact(contact.id)}
           />

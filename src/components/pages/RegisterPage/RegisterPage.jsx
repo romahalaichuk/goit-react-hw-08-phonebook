@@ -20,7 +20,7 @@ const RegisterPage = () => {
   };
 
   if (isRegistered) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" replace={true} />;
   }
 
   return (
