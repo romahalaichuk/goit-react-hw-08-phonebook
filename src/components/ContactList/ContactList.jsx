@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Contact from '../Contact/Contact';
 import Filter from '../Filter/Filter';
+
 import styles from './ContactList.module.css';
 import {
   fetchContacts,
@@ -34,10 +35,11 @@ const ContactList = () => {
   return (
     <div>
       <Filter />
+
       <ul className={styles.listContainer}>
         {contacts.map(contact => (
           <Contact
-            key={contact.id} // Dodaj klucz dla każdego elementu listy
+            key={contact.id}
             contact={contact}
             deleteContact={() => handleDeleteContact(contact.id)}
           />
