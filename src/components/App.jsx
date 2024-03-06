@@ -1,12 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import store from '../redux/store';
 
-import LoginPage from '../components/pages/LoginPage/LoginPage';
-import RegisterPage from '../components/pages/RegisterPage/RegisterPage';
-import ContactsPage from '../components/pages/ContactsPage/ContactsPage';
-import Navigation from '../components/Navigation/Navigation';
+import LoginPage from './pages/LoginPage/LoginPage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
+import ContactsPage from './pages/ContactsPage/ContactsPage';
+import Navigation from './Navigation/Navigation';
 
 const App = () => {
   return (
@@ -15,10 +15,11 @@ const App = () => {
         <div>
           <Navigation />
           <Routes>
+            {' '}
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/contacts" element={<ContactsPage />} />
-          </Routes>
+          </Routes>{' '}
         </div>
       </Router>
     </Provider>

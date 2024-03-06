@@ -10,7 +10,7 @@ const ContactForm = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    await dispatch(addNewContact({ name, phone }));
+    await dispatch(addNewContact({ name, number: phone }));
     setName('');
     setPhone('');
   };
